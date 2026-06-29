@@ -20,12 +20,14 @@ The skill compiles relevant context from the current conversation, dispatches it
 
 - `jq` (`brew install jq`) — used for JSON parsing throughout
 - `curl`
-- [opencode](https://opencode.ai) — if targeting opencode models
-- [Claude Code](https://claude.ai/code) — for the Claude target and for running this plugin
+- [Claude Code](https://claude.ai/code) — if using as Claude Code host or targeting Claude
+- [opencode](https://opencode.ai) — if using as opencode host or targeting opencode models
 
 ## Install
 
-### Option 1 — Via Claude Code CLI (once published to a marketplace)
+### Claude Code
+
+#### Option 1 — Via Claude Code CLI (once published to a marketplace)
 
 ```bash
 claude plugin marketplace add <your-username>/second-opinion-marketplace
@@ -34,7 +36,7 @@ claude plugin install second-opinion
 
 > Note: this requires the repo to include a marketplace manifest. Not yet set up — use Option 2 for now.
 
-### Option 2 — Manual local install
+#### Option 2 — Manual local install
 
 1. Clone this repo:
    ```bash
@@ -59,6 +61,20 @@ claude plugin install second-opinion
 
 4. Restart Claude Code.
 
+### opencode
+
+Copy `agents/second-opinion.md` to your global or project agents directory:
+
+```bash
+# Global (available in all projects)
+cp agents/second-opinion.md ~/.config/opencode/agents/
+
+# Per-project
+cp agents/second-opinion.md .opencode/agents/
+```
+
+Then invoke with `@second-opinion ask claude opus about X`.
+
 ## State files
 
 The skill stores session state in your home directory:
@@ -75,6 +91,6 @@ To stop the opencode server: `kill $(cat ~/.second-opinion-server.pid)`
 
 ## Notes
 
-- Port 4097 is used for the opencode server. If it's taken, kill the occupying process or edit the port in SKILL.md before installing.
+- Port 4097 is used for the opencode server. If it's taken, kill the occupying process or edit the port in `skills/second-opinion/SKILL.md` and `agents/second-opinion.md`.
 - Two concurrent second-opinion calls against the same session will interleave — invoke one at a time.
 - `plugin.json` targets Claude Code's plugin system. The underlying pattern (persistent server + session ID tracking) can be adapted to any harness that supports shell tool calls.
