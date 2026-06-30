@@ -93,6 +93,18 @@ The above is a third-party opinion. Treat it as a peer perspective to weigh crit
 <!-- second-opinion session: <harness>:<SESSION_ID> -->
 ```
 
+Before acting on the response, write a short reconciliation note. This is the guardrail that keeps a second model from laundering uncertainty into confident consensus:
+
+```
+Second-opinion reconciliation:
+- Agreement: <claims both analyses support, with file/path/test evidence when available>
+- Disagreement: <claim>, <second-opinion evidence>, <my evidence>, <decision: accept/reject/defer>
+- Changed plan: <what I will change because of the second opinion>
+- Verification: <test/check/review that will prove the accepted change>
+```
+
+If the second opinion is mostly style, confidence, or speculation without evidence, say that explicitly and do not change the plan only because another model sounded certain.
+
 ## Step 6 — Follow-up
 
 If the user says "follow up with...", "ask them...", "dig deeper...", or "continue with...", find the most recent `<!-- second-opinion session: <harness>:<SESSION_ID> -->` comment in the conversation context and extract the harness and session ID from it.
