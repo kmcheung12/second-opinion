@@ -22,7 +22,7 @@ opencode → opencode has not been tested.
 
 ## How it works
 
-The skill compiles relevant context from the current conversation, dispatches it to the target harness, and streams the response back — wrapped in `<second-opinion>` delimiters so it's treated as a peer perspective to weigh, not an authority to defer to.
+The skill compiles relevant context from the current conversation, dispatches it to the target harness, and returns the response wrapped in `<second-opinion>` delimiters so it's treated as a peer perspective to weigh, not an authority to defer to.
 
 - **opencode targets**: starts `opencode serve` once (port 4097 by default), uses `opencode run --attach` for dispatch and `opencode run -s <id>` for follow-ups. Sessions persist as long as the server is alive.
 - **Claude targets**: uses `claude -p --output-format json` for dispatch (no streaming) and `claude --resume <id> -p` for follow-ups. Sessions persist on disk independently.
@@ -31,7 +31,6 @@ The skill compiles relevant context from the current conversation, dispatches it
 ## Requirements
 
 - `jq` (`brew install jq`) — used for JSON parsing throughout
-- `curl`
 - [Claude Code](https://claude.ai/code) — if using as Claude Code host or targeting Claude
 - [opencode](https://opencode.ai) — if using as opencode host or targeting opencode models
 
@@ -90,4 +89,4 @@ You could, but you'd still have to switch tabs and manually compile the relevant
 
 - Port 4097 is used for the opencode server. If it's taken, kill the occupying process or edit the port in `skills/second-opinion/SKILL.md` and `agents/second-opinion.md`.
 - Two concurrent second-opinion calls against the same session will interleave — invoke one at a time.
-- `plugin.json` targets Claude Code's plugin system. The underlying pattern (persistent server + session ID tracking) can be adapted to any harness that supports shell tool calls.
+- The underlying pattern (persistent server + session ID tracking) can be adapted to any harness that supports shell tool calls.
