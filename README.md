@@ -27,39 +27,20 @@ The skill compiles relevant context from the current conversation, dispatches it
 
 ### Claude Code
 
-#### Option 1 — Via Claude Code CLI (once published to a marketplace)
+**Personal (all projects):** Copy the skill into your personal skills directory:
 
 ```bash
-claude plugin marketplace add <your-username>/second-opinion-marketplace
-claude plugin install second-opinion
+mkdir -p ~/.claude/skills/second-opinion
+cp skills/second-opinion/SKILL.md ~/.claude/skills/second-opinion/SKILL.md
 ```
 
-> Note: this requires the repo to include a marketplace manifest. Not yet set up — use Option 2 for now.
+**Per-project:** Copy the skill directory into your project's `.claude/skills/`:
 
-#### Option 2 — Manual local install
+```bash
+cp -r skills/second-opinion .claude/skills/
+```
 
-1. Clone this repo:
-   ```bash
-   git clone https://github.com/<your-username>/second-opinion ~/.claude/plugins/local/second-opinion
-   ```
-
-2. Add to `~/.claude/plugins/installed_plugins.json` under `"plugins"`:
-   ```json
-   "second-opinion@local": [{
-     "scope": "user",
-     "installPath": "/Users/<you>/.claude/plugins/local/second-opinion",
-     "version": "1.0.0",
-     "installedAt": "2026-01-01T00:00:00.000Z",
-     "lastUpdated": "2026-01-01T00:00:00.000Z"
-   }]
-   ```
-
-3. Enable it:
-   ```bash
-   claude plugin enable second-opinion@local
-   ```
-
-4. Restart Claude Code.
+The skill is available immediately — no restart needed. Invoke it with `/second-opinion` or let Claude load it automatically when relevant.
 
 ### opencode
 
