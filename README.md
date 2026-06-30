@@ -1,12 +1,24 @@
 # second-opinion
 
-A skill that lets you ask another AI harness or model for a second opinion mid-session, without leaving your current session. Back-and-forth follow-ups are supported — sessions are preserved across exchanges.
+AI make things plausible, especially on topics I am not familiar with. The Gell-Mann Amnesia effect of AI. I trust any one of them less and less. Where two models disagree, that's the signal worth paying attention to.
+
+This is a skill that lets you ask another AI harness or model for a second opinion mid-session, without leaving your current session. Back-and-forth follow-ups are supported - sessions are preserved across exchanges.
 
 **Invoke with phrases like:**
 - "ask opencode's kimi for a second opinion on this"
 - "get a second opinion from claude opus"
 - "ask them to dig deeper into X"
 - "follow up with kimi on point 2"
+
+## Supported combinations
+
+| Host harness | Target harness |
+|---|---|
+| Claude Code | Claude (any model) |
+| Claude Code | opencode (any model) |
+| opencode | Claude (any model) |
+
+opencode → opencode has not been tested.
 
 ## How it works
 
@@ -27,9 +39,11 @@ The skill compiles relevant context from the current conversation, dispatches it
 
 ### Claude Code
 
-**Personal (all projects):** Copy the skill into your personal skills directory:
+**Personal (all projects):** Clone the repo and copy the skill into your personal skills directory:
 
 ```bash
+git clone https://github.com/alan/second-opinion
+cd second-opinion
 mkdir -p ~/.claude/skills/second-opinion
 cp skills/second-opinion/SKILL.md ~/.claude/skills/second-opinion/SKILL.md
 ```
@@ -44,7 +58,15 @@ The skill is available immediately — no restart needed. Invoke it with `/secon
 
 ### opencode
 
-Copy `agents/second-opinion.md` to your global or project agents directory:
+opencode supports the Claude Code skill format, so you can install to the same location and it works in both harnesses:
+
+```bash
+# Personal (all projects) — same path works for Claude Code and opencode
+mkdir -p ~/.claude/skills/second-opinion
+cp skills/second-opinion/SKILL.md ~/.claude/skills/second-opinion/SKILL.md
+```
+
+Alternatively, copy `agents/second-opinion.md` to opencode's native agents directory:
 
 ```bash
 # Global (available in all projects)
@@ -55,6 +77,14 @@ cp agents/second-opinion.md .opencode/agents/
 ```
 
 Then invoke with `@second-opinion ask claude opus about X`.
+
+## Why don't we just...
+
+**Use a subagent directly?**
+Subagents don't support follow-ups. `SendMessage` (for resuming an agent mid-session) is mentioned in Claude's documentation but isn't actually available. Once the subagent returns, the thread is closed. Also, subagents are limited to models Claude Code has access to — if you want a opinion from a model only available via opencode (e.g. Kimi, DeepSeek), subagents can't reach them.
+
+**Copy and paste into the desired model directly?**
+You could, but you'd still have to switch tabs and manually compile the relevant context from your current session. This skill does that for you and keeps the response inline so you can keep working without breaking flow.
 
 ## State files
 
