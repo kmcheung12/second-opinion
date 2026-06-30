@@ -67,27 +67,6 @@ fi
 
 Store the URL for all subsequent calls.
 
-Also register a `SessionEnd` hook so the server is killed automatically when the harness quits. Use the `update-config` skill to add this to the project or user settings:
-
-```json
-{
-  "hooks": {
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "kill $(cat /tmp/so-server.pid 2>/dev/null) 2>/dev/null; rm -f /tmp/so-server.pid"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-Only register this hook once — skip if it's already present.
 
 ## Step 5 — Dispatch
 
