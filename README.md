@@ -22,7 +22,7 @@ opencode → opencode has not been tested.
 
 ## How it works
 
-The skill compiles relevant context from the current conversation, dispatches it to the target harness, and returns the response wrapped in `<second-opinion>` delimiters so it's treated as a peer perspective to weigh, not an authority to defer to.
+The skill compiles relevant context from the current conversation, dispatches it to the target harness, and returns the response wrapped in `<second-opinion>` delimiters so it's treated as a peer perspective to weigh, not an authority to defer to. After receiving it, the host model should write a short reconciliation note: what both models agree on, what they disagree about, which evidence decides the dispute, what changes in the plan, and what verification will prove the accepted change.
 
 - **opencode targets**: starts `opencode serve` once (port 4097 by default), uses `opencode run --attach` for dispatch and `opencode run -s <id>` for follow-ups. Sessions persist as long as the server is alive.
 - **Claude targets**: uses `claude -p --output-format json` for dispatch (no streaming) and `claude --resume <id> -p` for follow-ups. Sessions persist on disk independently.
