@@ -24,7 +24,7 @@ opencode → opencode has not been tested.
 
 The skill compiles relevant context from the current conversation, dispatches it to the target harness, and streams the response back — wrapped in `<second-opinion>` delimiters so it's treated as a peer perspective to weigh, not an authority to defer to.
 
-- **opencode targets**: starts `opencode serve` once (port 4097 by default), uses `opencode run --attach` for dispatch and `opencode run -s <id>` for follow-ups. Sessions persist as long as the server is alive. **Quitting your primary session kills the server and ends the follow-up chain.**
+- **opencode targets**: starts `opencode serve` once (port 4097 by default), uses `opencode run --attach` for dispatch and `opencode run -s <id>` for follow-ups. Sessions persist as long as the server is alive.
 - **Claude targets**: uses `claude -p --output-format json` for dispatch (no streaming) and `claude --resume <id> -p` for follow-ups. Sessions persist on disk independently.
 - **Model resolution**: Claude handles aliases (`opus`, `sonnet`) natively. opencode resolves via `opencode models | grep -i <hint>` with disambiguation if multiple matches.
 
@@ -39,7 +39,7 @@ The skill compiles relevant context from the current conversation, dispatches it
 
 ### Claude Code
 
-**Personal (all projects):** Clone the repo and copy the skill into your personal skills directory:
+**All projects:** Clone the repo and copy the skill into your personal skills directory:
 
 ```bash
 git clone https://github.com/alan/second-opinion
@@ -85,20 +85,6 @@ Subagents don't support follow-ups. `SendMessage` (for resuming an agent mid-ses
 
 **Copy and paste into the desired model directly?**
 You could, but you'd still have to switch tabs and manually compile the relevant context from your current session. This skill does that for you and keeps the response inline so you can keep working without breaking flow.
-
-## State files
-
-The skill stores session state in your home directory:
-
-| File | Purpose |
-|---|---|
-| `~/.second-opinion-session` | Active session ID |
-| `~/.second-opinion-harness` | Active harness (`claude` or `opencode`) |
-| `~/.second-opinion-server.pid` | opencode server PID |
-
-To reset state: `rm ~/.second-opinion-{session,harness,server.pid}`
-
-To stop the opencode server: `kill $(cat ~/.second-opinion-server.pid)`
 
 ## Notes
 
